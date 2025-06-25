@@ -30,12 +30,10 @@ public class DiscordHook implements ChatHook {
         this.chatPlayerManager = TownyChat.PLUGIN.getChatPlayerManager();
     }
 
-    // From Minecraft to Discord
     @EventHandler(priority = EventPriority.MONITOR)
     public void onMessage(AsyncChatHookEvent event) {
         String channelId = event.getChannel().getId();
 
-        // make sure chat channel is registered with a destination
         if (DiscordSRV.getPlugin().getDestinationTextChannelForGameChannelName(channelId) == null) {
             DiscordSRV.debug("Tried looking up destination Discord channel for Towny channel "
                     + event.getChannel().getName() + " but none found");
@@ -45,7 +43,6 @@ public class DiscordHook implements ChatHook {
         String messageString = MessageUtil
                 .stripMiniTokens(PlainTextComponentSerializer.plainText().serialize(event.getMessage()));
 
-        // make sure message isn't blank
         if (StringUtils.isBlank(messageString)) {
             DiscordSRV.debug("Received blank TownyChatRemake message, not processing");
             return;
@@ -55,14 +52,11 @@ public class DiscordHook implements ChatHook {
                 event);
     }
 
-    // From Discord to Minecraft
     @Override
     public void broadcastMessageToChannel(String channelId, Component message) {
 
-        // default to global channel
         Channel destinationChannel = TownyChat.PLUGIN.getGlobalChannel();
 
-        // get the destination channel
         for (Channel channel : channelManager.getChannels().values()) {
             if (channel.getId().equals(channelId)) {
                 destinationChannel = channel;
