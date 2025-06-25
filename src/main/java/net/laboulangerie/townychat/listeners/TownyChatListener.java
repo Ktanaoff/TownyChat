@@ -1,5 +1,14 @@
 package net.laboulangerie.townychat.listeners;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -112,11 +121,9 @@ public class TownyChatListener implements Listener {
         }
 
         Set<Player> recipients = residents.stream().map(Resident::getPlayer)
-                // Filter null players
                 .filter(Objects::nonNull)
                 .collect(Collectors.toSet());
 
-        // Removes players that disabled this channel
         recipients.removeIf(
                 p -> !(chatPlayerManager.getChatPlayer(p).getActiveChannels()
                         .contains(currentChannel)));
