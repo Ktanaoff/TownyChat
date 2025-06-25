@@ -5,82 +5,70 @@
 # Towny placeholders: https://github.com/TownyAdvanced/Towny/wiki/Placeholders
 # Note: PAPI placeholders need to be used like so : <papi:my_placeholder>
 
-# Channel name can be modified
-# Channel format can be modified with PAPI's placeholders and MiniMessage syntax.
-# MiniMessage syntax is powerful, you can format and add hover/click events easily!
-# Channel command can be modified but you'll need to restart your server to get the changes.
-
 channels:
-    global:
-        name: "Global Chat"
-        aliases: ["g", "general"]
-        format: "<town><nation><rank> <username> > <message>"
-        command: "gc"
+  global:
+    name: "Global Chat"
+    aliases: ["g", "general"]
+    format: "<town><nation><rank> <username> > <message>"
+    command: "gc"
 
-    town:
-        name: "Town Chat"
-        aliases: ["t"]
-        format: "<town_prefix> <rank> <username> > <aqua><message>"
-        spy_format: "<spy_prefix> <town_prefix> <town> <username> > <dark_purple><message>"
-        command: "tc"
+  town:
+    name: "Town Chat"
+    aliases: ["t"]
+    format: "<town_prefix> <rank> <username> > <aqua><message>"
+    spy_format: "<spy_prefix> <town_prefix> <town> <username> > <dark_purple><message>"
+    command: "tc"
 
-    nation:
-        name: "Nation Chat"
-        aliases: ["n"]
-        format: "<nation_prefix> <town><rank> <username> > <gold><message>"
-        spy_format: "<spy_prefix> <nation_prefix> <nation> <username> > <dark_purple><message>"
-        command: "nc"
+  nation:
+    name: "Nation Chat"
+    aliases: ["n"]
+    format: "<nation_prefix> <town><rank> <username> > <gold><message>"
+    spy_format: "<spy_prefix> <nation_prefix> <nation> <username> > <dark_purple><message>"
+    command: "nc"
 
-    local:
-        name: "Local Chat"
-        aliases: ["l"]
-        format: "<local_prefix> <town><nation><rank> <username> > <green><message>"
-        spy_format: "<spy_prefix> <local_prefix> <town><nation> <username> > <dark_purple><message>"
-        radius: 20
-        command: "lc"
+  local:
+    name: "Local Chat"
+    aliases: ["l"]
+    format: "<local_prefix> <town><nation><rank> <username> > <green><message>"
+    spy_format: "<spy_prefix> <local_prefix> <town><nation> <username> > <dark_purple><message>"
+    radius: 20
+    command: "lc"
 
-# You can define custom tags in the section below
-# and use them in channel formats like so: <tag_name>
-# You can use PAPI's placeholders and MiniMessage syntax here too!
 tags:
-    town_prefix: "<aqua><bold>TC</bold></aqua>"
-    nation_prefix: "<gold><bold>NC</bold></gold>"
-    local_prefix: "<green><bold>LC</bold></green>"
-    spy_prefix: "<dark_purple><bold>SPY</bold></dark_purple>"
-
-    rank: "<papi:townyadvanced_towny_colour><papi:townyadvanced_player_status>"
-
-    username: "<papi:townyadvanced_towny_colour><papi:player_name>"
-
-    town: "<hover:show_text:'<papi:townyadvanced_town_formatted>\n<papi:townyadvanced_town_residents_amount> resident.s'><papi:townyadvanced_town_tag></hover>"
-
-    nation: "<hover:show_text:'<townyadvanced_nation_formatted>\n<townyadvanced_nation_residents_amount> resident.s'><papi:townyadvanced_nation_tag></hover>"
+  town_prefix: "<aqua><bold>TC</bold></aqua>"
+  nation_prefix: "<gold><bold>NC</bold></gold>"
+  local_prefix: "<green><bold>LC</bold></green>"
+  spy_prefix: "<dark_purple><bold>SPY</bold></dark_purple>"
+  rank: "<hover:show_text:'<gray>Status:\n<yellow><papi:townyadvanced_player_status>'><papi:townyadvanced_towny_colour><papi:townyadvanced_player_status></hover>"
 
 lang:
-    channel_switched: "Switched to <channel>"
-    disabled: "Disabled"
-    enabled: "Enabled"
-    # Status is either disabled or enabled ^
-    channel_toggled: "<status> <channel>"
-    spying_toggled: "Spying is <status>"
-    err_channel_not_found: "Channel <channel> not found"
-    err_sender_not_player: "<red>You need to be in-game in order to do this!"
-    err_channel_disabled: "You disabled this channel! Use /<channel> toggle chat to enable it"
-    err_no_message: "You didn't sent a message. Usage: /<channel> your message"
+  channel_switched: "Switched to <channel>"
+  disabled: "Disabled"
+  enabled: "Enabled"
+  channel_toggled: "<status> <channel>"
+  spying_toggled: "Spying is <status>"
+  err_channel_not_found: "Channel <channel> not found"
+  err_sender_not_player: "<red>You need to be in-game in order to do this!"
+  err_channel_disabled: "You disabled this channel! Use /<channel> toggle chat to enable it"
+  err_no_message: "You didn't send a message. Usage: /<channel> your message"
 
-# Set [] if you want to disable the blacklist
 blacklist:
-    - "chocolatine"
-    - "fuck"
-    - "shit"
+  - "chocolatine"
+  - "fuck"
+  - "shit"
 
-# MiniMessage, Placeholders and Tags can be used here
 misc:
-    first_join_message: "<gradient:green:yellow>➔ Bienvenue <username>"
-    join_message: "<green>→</green> <rank> <username>"
-    quit_message: "<red>←</red> <rank> <username>"
-    advancement:
-        # <advancement_title> and <advancement_description> can be used.
-        challenge: "<dark_purple>✽ <username> has made the advancement <bold><hover:show_text:'<dark_purple><advancement_description>'><advancement_title>"
-        goal: "<gold>✸ <username> has made the advancement <bold><hover:show_text:'<gold><advancement_description>'><advancement_title>"
-        task: "<yellow>✦ <username> has made the advancement <bold><hover:show_text:'<yellow><advancement_description>'><advancement_title>"
+  first_join_message: "<gradient:green:yellow>➔ Bienvenue <username>"
+  join_message: "<green>→</green> <rank> <username>"
+  quit_message: "<red>←</red> <rank> <username>"
+
+  advancement:
+    challenge: "<dark_purple>✽ <username> has made the advancement <bold><hover:show_text:'<dark_purple><advancement_description>'><advancement_title>"
+    goal: "<gold>✸ <username> has made the advancement <bold><hover:show_text:'<gold><advancement_description>'><advancement_title>"
+    task: "<yellow>✦ <username> has made the advancement <bold><hover:show_text:'<yellow><advancement_description>'><advancement_title>"
+
+# Towny + PAPI formatted fallback formatting for other plugins that use %town%, etc.
+papi_chat_formatting:
+  town: "<hover:show_text:'<blue>Town: <aqua>%s</aqua>\n<gray>⎯⎯⎯⎯⎯⎯⎯\n<gray>⬤ Click to see town info\n<gray>⬤ Meet fellow residents'><click:run_command:'/t %s'><gray>[</gray><#00eaff>%s<gray>]</gray> </#00eaff></click></hover>"
+
+  nation: "<hover:show_text:'<gold>Nation: <yellow>%s</yellow>\n<gray>⎯⎯⎯⎯⎯⎯⎯\n<gray>⬤ Explore the nation\n<gray>⬤ Discover allied towns'><click:run_command:'/n %s '><gray>[</gray><#ffaa00>%s</#ffaa00><gray>]</gray> </click></hover>"
