@@ -19,59 +19,52 @@ import net.laboulangerie.townychat.TownyChat;
 public class ComponentRenderer {
 
     public Component parse(OfflinePlayer player, String text) {
-
-        Component miniMessageParsed = getPapiMiniMessage(player).deserialize(text, parseTags(player));
-
-        return miniMessageParsed;
+        return getMiniMessage(player).deserialize(text, parseTags(player));
     }
 
-    public Component parse(OfflinePlayer player, String text, TagResolver additionnalResolver) {
-        TagResolver tagResolver = TagResolver.resolver(parseTags(player), additionnalResolver);
-
-        Component miniMessageParsed = getPapiMiniMessage(player).deserialize(text, tagResolver);
-
-        return miniMessageParsed;
+    public Component parse(OfflinePlayer player, String text, TagResolver additionalResolver) {
+        TagResolver tagResolver = TagResolver.resolver(parseTags(player), additionalResolver);
+        return getMiniMessage(player).deserialize(text, tagResolver);
     }
 
     private TagResolver parseTags(OfflinePlayer player) {
-        List<TagResolver.Single> resolvers = new ArrayList<>();
+        List<TagResolver> resolvers = new ArrayList<>();
         ConfigurationSection tagSection = TownyChat.PLUGIN.getConfig().getConfigurationSection("tags");
 
-        for (String key : tagSection.getKeys(false)) {
-            String tag = tagSection.getString(key);
-
-            resolvers.add(
-                    Placeholder.component(key,
-                            getPapiMiniMessage(player).deserialize(tag)));
+        if (tagSection != null) {
+            for (String key : tagSection.getKeys(false)) {
+                String raw = tagSection.getString(key, "");
+                Component resolved = getMiniMessage(player).deserialize(raw);
+                resolvers.add(Placeholder.component(key, resolved));
+            }
         }
 
         return TagResolver.resolver(resolvers);
     }
 
-    public MiniMessage getPapiMiniMessage(OfflinePlayer player) {
-
-        return MiniMessage.builder().tags(
-                TagResolver.builder()
-                        .resolver(StandardTags.defaults())
-                        .resolver(papiTagResolver(player))
-                        .build())
+    private MiniMessage getMiniMessage(OfflinePlayer player) {
+        return MiniMessage.builder()
+                .tags(
+                    TagResolver.builder()
+                        .resolver(StandardTags.defaults())    
+                        .resolver(papiTagResolver(player))      
+                        .build()
+                )
                 .build();
     }
 
     private TagResolver papiTagResolver(OfflinePlayer player) {
-
         return TagResolver.resolver("papi", (argumentQueue, context) -> {
             String placeholder = argumentQueue
-                    .popOr("The <papi> tag requires exactly one argument, the PAPI placeholder").value();
+                .popOr("The <papi> tag requires exactly one argument, the PAPI placeholder").value();
 
-            String parsedPlaceholder = PlaceholderAPI.setPlaceholders(player, '%' + placeholder + '%');
+            String parsed = PlaceholderAPI.setPlaceholders(player, "%" + placeholder + "%");
 
-            if (parsedPlaceholder.contains("§")) {
-                return Tag
-                        .selfClosingInserting(LegacyComponentSerializer.legacySection().deserialize(parsedPlaceholder));
+            if (parsed.contains("§")) {
+                return Tag.selfClosingInserting(LegacyComponentSerializer.legacySection().deserialize(parsed));
+            } else {
+                return Tag.selfClosingInserting(MiniMessage.miniMessage().deserialize(parsed));
             }
-
-            return Tag.selfClosingInserting(MiniMessage.miniMessage().deserialize(parsedPlaceholder));
         });
     }
 }
