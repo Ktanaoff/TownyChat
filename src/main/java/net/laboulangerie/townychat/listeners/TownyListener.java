@@ -71,7 +71,6 @@ public class TownyListener implements Listener {
         Channel newTownChannel = new Channel(ChannelTypes.TOWN, town);
         channelManager.addChannel(town, newTownChannel);
 
-        // The mayor is the only player in the town on town creation
         ChatPlayer chatPlayer = residentToChatPlayer(town.getMayor());
         if (chatPlayer == null)
             return;
