@@ -31,7 +31,6 @@ public class MiscListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         event.joinMessage(null);
 
-        // Wait for Towny to create new resident
         new BukkitRunnable() {
 
             @Override
